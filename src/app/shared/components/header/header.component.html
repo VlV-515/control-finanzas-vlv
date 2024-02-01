@@ -1,0 +1,30 @@
+<section class="flex items-center justify-between p-2 bg-primary">
+  <button *ngIf="user" mat-icon-button (click)="btnMenu.emit(true)">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="font-bold text-background">
+    {{ user ? "💰 FINANCIAL CONTROL VlV" : "BIENVENIDO" }}
+  </div>
+  <ng-container *ngIf="user; else loginButton">
+    <section class="flex items-center gap-5">
+      <button
+        class="text-white btn bg-secondary"
+        [matMenuTriggerFor]="userMenu"
+      >
+        {{ user.nickname }} - {{ user.email }}
+      </button>
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <section class="flex justify-center">
+          <button class="text-white btn bg-danger" (click)="loginSvc.logout()">
+            Logout
+          </button>
+        </section>
+      </mat-menu>
+    </section>
+  </ng-container>
+  <ng-template #loginButton>
+    <button class="text-white btn bg-secondary" (click)="loginSvc.login()">
+      Login / Signup
+    </button>
+  </ng-template>
+</section>
